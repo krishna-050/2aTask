@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dark Mode Toggle</title>
+
+    <style>
+        /* =========================
+           LIGHT MODE VARIABLES
+           ========================= */
+        :root {
+            --background-color: #f5f5f5;
+            --text-color: #222;
+            --card-color: white;
+            --primary-color: #6c5ce7;
+            --border-color: #ddd;
+        }
+
+        /* =========================
+           DARK MODE VARIABLES
+           ========================= */
+        #dark-mode:checked ~ .page {
+            --background-color: #121212;
+            --text-color: #f5f5f5;
+            --card-color: #1e1e1e;
+            --primary-color: #a29bfe;
+            --border-color: #333;
+        }
+
+        /* Page */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Hide checkbox */
+        #dark-mode {
+            display: none;
+        }
+
+        /* Toggle button */
+        .toggle-label {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+
+            padding: 10px 18px;
+            border-radius: 25px;
+
+            background-color: var(--primary-color);
+            color: white;
+
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Main page */
+        .page {
+            min-height: 100vh;
+            padding: 80px 20px;
+
+            background-color: var(--background-color);
+            color: var(--text-color);
+
+            transition: 0.3s;
+        }
+
+        /* Content */
+        .container {
+            max-width: 700px;
+            margin: auto;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 15px;
+        }
+
+        /* Cards */
+        .card {
+            margin-top: 30px;
+            padding: 25px;
+
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+
+            text-align: left;
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+        }
+
+        /* Button */
+        .btn {
+            margin-top: 15px;
+            padding: 12px 20px;
+
+            border: none;
+            border-radius: 6px;
+
+            background-color: var(--primary-color);
+            color: white;
+
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Checkbox controls dark mode -->
+    <input type="checkbox" id="dark-mode">
+
+    <!-- Toggle button -->
+    <label for="dark-mode" class="toggle-label">
+        🌙 Dark Mode
+    </label>
+
+    <!-- Page -->
+    <div class="page">
+
+        <div class="container">
+
+            <h1>My Website</h1>
+
+            <p>
+                This website supports Light Mode and Dark Mode.
+            </p>
+
+            <div class="card">
+                <h2>CSS Variables</h2>
+
+                <p>
+                    CSS variables make it easy to change the
+                    colors of the entire website.
+                </p>
+
+                <button class="btn">
+                    Learn More
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

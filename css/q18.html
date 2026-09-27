@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Journey Timeline</title>
+
+    <style>
+
+        /* Page */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+
+        /* Main Container */
+        .timeline {
+            width: 600px;
+            max-width: 90%;
+            margin: 50px auto;
+            position: relative;
+        }
+
+
+        /* Vertical Line */
+        .timeline::before {
+            content: "";
+            position: absolute;
+
+            left: 20px;
+            top: 0;
+            bottom: 0;
+
+            width: 4px;
+            background-color: #2563eb;
+        }
+
+
+        /* Timeline Item */
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 60px;
+        }
+
+
+        /* Circle / Dot */
+        .timeline-item::after {
+            content: "";
+
+            position: absolute;
+
+            left: 11px;
+            top: 5px;
+
+            width: 22px;
+            height: 22px;
+
+            background-color: white;
+
+            border: 4px solid #2563eb;
+
+            border-radius: 50%;
+
+            box-sizing: border-box;
+        }
+
+
+        /* Content Box */
+        .content {
+            background-color: white;
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 4px 10px #aaa;
+        }
+
+
+        .content h2 {
+            margin-top: 0;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="timeline">
+
+        <!-- Step 1 -->
+        <div class="timeline-item">
+
+            <div class="content">
+                <h2>Admission</h2>
+                <p>Student starts the college journey.</p>
+            </div>
+
+        </div>
+
+
+        <!-- Step 2 -->
+        <div class="timeline-item">
+
+            <div class="content">
+                <h2>First Year</h2>
+                <p>Student learns programming basics.</p>
+            </div>
+
+        </div>
+
+
+        <!-- Step 3 -->
+        <div class="timeline-item">
+
+            <div class="content">
+                <h2>Internship</h2>
+                <p>Student gains real-world experience.</p>
+            </div>
+
+        </div>
+
+
+        <!-- Step 4 -->
+        <div class="timeline-item">
+
+            <div class="content">
+                <h2>Final Year</h2>
+                <p>Student works on projects and prepares for jobs.</p>
+            </div>
+
+        </div>
+
+
+        <!-- Step 5 -->
+        <div class="timeline-item">
+
+            <div class="content">
+                <h2>Graduation</h2>
+                <p>Student completes the college journey.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

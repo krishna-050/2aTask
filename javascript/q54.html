@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q54 - Dynamic Table</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 30px; }
+    h2 { color: #4f46e5; text-align: center; }
+    .controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .controls input { padding: 9px 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 0.95rem; outline: none; }
+    .controls input:focus { border-color: #4f46e5; }
+    .controls button { padding: 9px 18px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
+    .btn-add { background: #4f46e5; color: white; }
+    .btn-clear { background: #ef4444; color: white; }
+    table { width: 100%; max-width: 650px; margin: 0 auto; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    th { background: #4f46e5; color: white; padding: 12px 15px; text-align: left; }
+    td { padding: 11px 15px; border-bottom: 1px solid #f0f0f0; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f5f3ff; }
+    .btn-del { background: #ef4444; color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+    #rowCount { text-align: center; color: #666; margin-top: 10px; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h2>Q54 - Dynamic Table Rows</h2>
+  <div class="controls">
+    <input type="text" id="inName" placeholder="Name">
+    <input type="text" id="inAge" placeholder="Age">
+    <input type="text" id="inCity" placeholder="City">
+    <button class="btn-add" onclick="addRow()">Add Row</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+  <table>
+    <thead><tr><th>#</th><th>Name</th><th>Age</th><th>City</th><th>Action</th></tr></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div id="rowCount">Total rows: 0</div>
+
+  <script>
+    let count = 0;
+
+    function addRow() {
+      const name = document.getElementById('inName').value.trim();
+      const age = document.getElementById('inAge').value.trim();
+      const city = document.getElementById('inCity').value.trim();
+      if (!name || !age || !city) return alert('Please fill all fields!');
+      count++;
+      const tbody = document.getElementById('tableBody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${count}</td><td>${name}</td><td>${age}</td><td>${city}</td>
+        <td><button class="btn-del" onclick="this.closest('tr').remove(); updateCount()">Delete</button></td>`;
+      tbody.appendChild(tr);
+      ['inName','inAge','inCity'].forEach(id => document.getElementById(id).value = '');
+      updateCount();
+    }
+
+    function updateCount() {
+      document.getElementById('rowCount').textContent = `Total rows: ${document.getElementById('tableBody').rows.length}`;
+    }
+
+    function clearAll() {
+      document.getElementById('tableBody').innerHTML = '';
+      count = 0; updateCount();
+    }
+  </script>
+</body>
+</html>

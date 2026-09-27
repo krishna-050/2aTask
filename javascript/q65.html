@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q65 - Toast Notifications</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; gap: 15px; }
+    h2 { color: #4f46e5; margin-bottom: 5px; }
+    p { color: #666; margin: 0 0 20px; font-size: 0.95rem; }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .btn-row button { padding: 11px 22px; border: none; border-radius: 9px; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: white; }
+    .btn-success { background: #22c55e; }
+    .btn-error { background: #ef4444; }
+    .btn-warning { background: #f59e0b; }
+    .btn-info { background: #3b82f6; }
+
+    #toast-container { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+    .toast {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border-radius: 10px; color: white;
+      min-width: 280px; max-width: 350px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      animation: slideIn 0.3s ease; position: relative; overflow: hidden;
+    }
+    .toast.hide { animation: slideOut 0.3s ease forwards; }
+    .toast .icon { font-size: 1.3rem; flex-shrink: 0; }
+    .toast .content { flex: 1; }
+    .toast .title { font-weight: bold; font-size: 0.95rem; }
+    .toast .msg { font-size: 0.85rem; opacity: 0.9; margin-top: 2px; }
+    .toast .close { background: none; border: none; color: white; cursor: pointer; font-size: 1.1rem; opacity: 0.7; padding: 0; }
+    .toast .close:hover { opacity: 1; }
+    .toast .progress { position: absolute; bottom: 0; left: 0; height: 3px; background: rgba(255,255,255,0.5); animation: progress 3s linear forwards; }
+    .toast.success { background: #16a34a; }
+    .toast.error { background: #dc2626; }
+    .toast.warning { background: #d97706; }
+    .toast.info { background: #2563eb; }
+    @keyframes slideIn { from { transform: translateX(110%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOut { to { transform: translateX(110%); opacity: 0; } }
+    @keyframes progress { from { width: 100%; } to { width: 0%; } }
+  </style>
+</head>
+<body>
+  <h2>Q65 - Toast Notifications</h2>
+  <p>Click buttons to show different toast types</p>
+  <div class="btn-row">
+    <button class="btn-success" onclick="toast('success','Success!','Operation completed successfully.')">✅ Success</button>
+    <button class="btn-error" onclick="toast('error','Error!','Something went wrong. Please try again.')">❌ Error</button>
+    <button class="btn-warning" onclick="toast('warning','Warning!','Please review before proceeding.')">⚠️ Warning</button>
+    <button class="btn-info" onclick="toast('info','Info','Your session will expire in 5 minutes.')">ℹ️ Info</button>
+  </div>
+  <div id="toast-container"></div>
+
+  <script>
+    const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+
+    function toast(type, title, msg) {
+      const container = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      el.className = `toast ${type}`;
+      el.innerHTML = `
+        <span class="icon">${icons[type]}</span>
+        <div class="content"><div class="title">${title}</div><div class="msg">${msg}</div></div>
+        <button class="close" onclick="dismiss(this.parentElement)">✕</button>
+        <div class="progress"></div>`;
+      container.appendChild(el);
+      setTimeout(() => dismiss(el), 3000);
+    }
+
+    function dismiss(el) {
+      el.classList.add('hide');
+      setTimeout(() => el.remove(), 300);
+    }
+  </script>
+</body>
+</html>

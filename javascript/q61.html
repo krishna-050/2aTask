@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q61 - Custom Dropdown</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; flex-direction: column; gap: 30px; }
+    h2 { color: #4f46e5; margin: 0; }
+    .dropdown { position: relative; width: 280px; }
+    .dd-selected {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; background: white; border: 2px solid #e5e7eb;
+      border-radius: 10px; cursor: pointer; user-select: none; transition: border 0.2s;
+    }
+    .dd-selected:hover, .dropdown.open .dd-selected { border-color: #4f46e5; }
+    .dd-selected .arrow { transition: transform 0.3s; font-size: 0.8rem; color: #888; }
+    .dropdown.open .dd-selected .arrow { transform: rotate(180deg); }
+    .dd-menu {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: white; border: 2px solid #e5e7eb; border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12); z-index: 100;
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+    }
+    .dropdown.open .dd-menu { max-height: 300px; }
+    .dd-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px; cursor: pointer; transition: background 0.15s;
+    }
+    .dd-item:hover { background: #f5f3ff; }
+    .dd-item.selected { background: #ede9fe; color: #4f46e5; font-weight: 600; }
+    .dd-item .icon { font-size: 1.2rem; }
+    #result { font-size: 1rem; color: #555; }
+  </style>
+</head>
+<body>
+  <h2>Q61 - Custom Dropdown</h2>
+
+  <div class="dropdown" id="dropdown">
+    <div class="dd-selected" onclick="toggleDropdown()">
+      <span id="selectedText">🌍 Select Country</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="dd-menu" id="ddMenu">
+      <div class="dd-item" data-value="india" onclick="selectItem(this)"><span class="icon">🇮🇳</span> India</div>
+      <div class="dd-item" data-value="usa" onclick="selectItem(this)"><span class="icon">🇺🇸</span> United States</div>
+      <div class="dd-item" data-value="uk" onclick="selectItem(this)"><span class="icon">🇬🇧</span> United Kingdom</div>
+      <div class="dd-item" data-value="japan" onclick="selectItem(this)"><span class="icon">🇯🇵</span> Japan</div>
+      <div class="dd-item" data-value="germany" onclick="selectItem(this)"><span class="icon">🇩🇪</span> Germany</div>
+      <div class="dd-item" data-value="canada" onclick="selectItem(this)"><span class="icon">🇨🇦</span> Canada</div>
+    </div>
+  </div>
+
+  <div id="result">No country selected yet.</div>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById('dropdown').classList.toggle('open');
+    }
+
+    function selectItem(el) {
+      document.querySelectorAll('.dd-item').forEach(i => i.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('selectedText').innerHTML = el.innerHTML;
+      document.getElementById('result').textContent = `✅ Selected: ${el.textContent.trim()}`;
+      document.getElementById('dropdown').classList.remove('open');
+    }
+
+    document.addEventListener('click', e => {
+      if (!document.getElementById('dropdown').contains(e.target))
+        document.getElementById('dropdown').classList.remove('open');
+    });
+  </script>
+</body>
+</html>

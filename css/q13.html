@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Loading Spinner</title>
+
+    <style>
+
+        /* Center the spinner */
+        body {
+            height: 100vh;
+           display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f2f2f2;
+        }
+
+
+        /* Spinner */
+        .spinner {
+            width: 60px;
+            height: 60px;
+
+            border: 50px solid #ddd;
+            border-top: 50px solid blue;
+            border-radius: 50%;
+
+            animation: spin 3s linear infinite;
+        }
+
+
+        /* Animation */
+        @keyframes spin {
+
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="spinner"></div>
+
+</body>
+
+</html>

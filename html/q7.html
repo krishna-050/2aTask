@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Login Modal</title>
+</head>
+
+<body>
+
+    <h1>Student Portal</h1>
+
+    <!-- Login Modal -->
+    <div role="dialog"
+         aria-labelledby="login-title"
+         aria-describedby="login-description"
+         aria-modal="true">
+
+        <h2 id="login-title">Login</h2>
+
+        <p id="login-description">
+            Enter your email and password to login.
+        </p>
+
+        <form>
+
+            <label for="email">Email:</label>
+            <input type="email"
+                   name="email"
+                   required>
+
+            <br><br>
+
+            <label for="password">Password:</label>
+            <input type="password"
+                   name="password"
+                   required>
+
+            <br><br>
+
+            <button type="submit">
+                Login
+            </button>
+
+            <button type="button">
+                Close
+            </button>
+
+        </form>
+    </div>
+
+</body>
+</html>

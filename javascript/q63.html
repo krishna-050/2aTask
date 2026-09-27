@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q63 - Stopwatch</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #1a1a2e; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+    .watch { text-align: center; }
+    h2 { color: #e94560; font-size: 1.5rem; margin-bottom: 30px; }
+    .display {
+      font-size: 5rem; font-weight: bold; letter-spacing: 4px;
+      background: #16213e; padding: 30px 50px; border-radius: 20px;
+      border: 3px solid #e94560; margin-bottom: 30px; font-family: monospace;
+    }
+    .display .ms { font-size: 2.5rem; color: #e94560; }
+    .controls { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; }
+    .controls button {
+      padding: 12px 28px; border: none; border-radius: 10px;
+      font-size: 1rem; cursor: pointer; font-weight: bold; transition: opacity 0.2s;
+    }
+    .controls button:hover { opacity: 0.85; }
+    .btn-start { background: #22c55e; color: white; }
+    .btn-stop { background: #ef4444; color: white; }
+    .btn-lap { background: #f59e0b; color: white; }
+    .btn-reset { background: #6b7280; color: white; }
+    .laps { max-height: 200px; overflow-y: auto; width: 320px; margin: 0 auto; }
+    .lap-item { display: flex; justify-content: space-between; padding: 8px 14px; background: #16213e; border-radius: 8px; margin-bottom: 6px; font-size: 0.9rem; }
+    .lap-item .lap-num { color: #e94560; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="watch">
+    <h2>⏱️ Stopwatch</h2>
+    <div class="display">
+      <span id="hh">00</span>:<span id="mm">00</span>:<span id="ss">00</span><span class="ms">.<span id="ms">00</span></span>
+    </div>
+    <div class="controls">
+      <button class="btn-start" onclick="startStop()" id="startBtn">▶ Start</button>
+      <button class="btn-lap" onclick="recordLap()">🏁 Lap</button>
+      <button class="btn-reset" onclick="reset()">↺ Reset</button>
+    </div>
+    <div class="laps" id="laps"></div>
+  </div>
+
+  <script>
+    let interval = null, elapsed = 0, lapCount = 0, running = false;
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function render() {
+      const total = elapsed;
+      const ms = Math.floor((total % 1000) / 10);
+      const ss = Math.floor(total / 1000) % 60;
+      const mm = Math.floor(total / 60000) % 60;
+      const hh = Math.floor(total / 3600000);
+      document.getElementById('hh').textContent = pad(hh);
+      document.getElementById('mm').textContent = pad(mm);
+      document.getElementById('ss').textContent = pad(ss);
+      document.getElementById('ms').textContent = pad(ms);
+    }
+
+    function startStop() {
+      if (running) {
+        clearInterval(interval); running = false;
+        document.getElementById('startBtn').textContent = '▶ Start';
+        document.getElementById('startBtn').className = 'btn-start';
+      } else {
+        const start = Date.now() - elapsed;
+        interval = setInterval(() => { elapsed = Date.now() - start; render(); }, 10);
+        running = true;
+        document.getElementById('startBtn').textContent = '⏸ Pause';
+        document.getElementById('startBtn').className = 'btn-stop';
+      }
+    }
+
+    function recordLap() {
+      if (!running) return;
+      lapCount++;
+      const ms = Math.floor((elapsed % 1000) / 10);
+      const ss = Math.floor(elapsed / 1000) % 60;
+      const mm = Math.floor(elapsed / 60000) % 60;
+      const div = document.createElement('div');
+      div.className = 'lap-item';
+      div.innerHTML = `<span class="lap-num">Lap ${lapCount}</span><span>${pad(mm)}:${pad(ss)}.${pad(ms)}</span>`;
+      document.getElementById('laps').prepend(div);
+    }
+
+    function reset() {
+      clearInterval(interval); running = false; elapsed = 0; lapCount = 0;
+      render();
+      document.getElementById('laps').innerHTML = '';
+      document.getElementById('startBtn').textContent = '▶ Start';
+      document.getElementById('startBtn').className = 'btn-start';
+    }
+  </script>
+</body>
+</html>

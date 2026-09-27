@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q43 - Quote Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center" style="min-height:100vh">
+<div class="card shadow p-5 text-center" style="width:500px">
+    <h4 class="mb-4">Random Quote Generator</h4>
+
+    <div class="bg-white border rounded p-4 mb-4" style="min-height:120px">
+        <p id="quote" class="fs-5 fst-italic mb-2">"Click the button to get inspired!"</p>
+        <p id="author" class="text-muted fw-bold">— </p>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-center">
+        <button class="btn btn-primary px-4" onclick="newQuote()">✨ New Quote</button>
+        <button class="btn btn-outline-secondary" onclick="copyQuote()">📋 Copy</button>
+    </div>
+    <p id="copied" class="text-success small mt-2" style="visibility:hidden">Copied to clipboard!</p>
+</div>
+
+<script>
+    const quotes = [
+        { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+        { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
+        { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+        { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+        { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+        { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+        { text: "You miss 100% of the shots you don't take.", author: "Wayne Gretzky" },
+        { text: "Whether you think you can or you think you can't, you're right.", author: "Henry Ford" },
+        { text: "Strive not to be a success, but rather to be of value.", author: "Albert Einstein" },
+        { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+    ];
+
+    let last = -1;
+
+    function newQuote() {
+        let i;
+        do { i = Math.floor(Math.random() * quotes.length); } while (i === last);
+        last = i;
+        const q = quotes[i];
+        const quoteEl = document.getElementById('quote');
+        quoteEl.style.opacity = 0;
+        setTimeout(() => {
+            quoteEl.textContent = `"${q.text}"`;
+            document.getElementById('author').textContent = `— ${q.author}`;
+            quoteEl.style.transition = 'opacity 0.4s';
+            quoteEl.style.opacity = 1;
+        }, 200);
+    }
+
+    function copyQuote() {
+        const text = document.getElementById('quote').textContent + ' ' + document.getElementById('author').textContent;
+        navigator.clipboard.writeText(text);
+        const msg = document.getElementById('copied');
+        msg.style.visibility = 'visible';
+        setTimeout(() => msg.style.visibility = 'hidden', 2000);
+    }
+</script>
+</body>
+</html>

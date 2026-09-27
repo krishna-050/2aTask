@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page - Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        #hero {
+            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            min-height: 90vh;
+        }
+        .feature-icon { font-size: 2.5rem; }
+        .pricing-card:hover { transform: scale(1.03); transition: 0.3s; }
+        footer { background-color: #1e2a38; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">🚀 LaunchKit</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">Reviews</a></li>
+                    <li class="nav-item"><a class="btn btn-primary px-3" href="#contact">Get Started</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="d-flex align-items-center text-white">
+        <div class="container text-center py-5">
+            <h1 class="display-4 fw-bold">Build Faster. Launch Smarter.</h1>
+            <p class="lead mt-3 mb-4">The all-in-one platform to build, launch, and grow your product.</p>
+            <a href="#features" class="btn btn-light btn-lg me-2">Explore Features</a>
+            <a href="#contact" class="btn btn-outline-light btn-lg">Get Started Free</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-2">Why Choose Us?</h2>
+            <p class="text-muted mb-5">Everything you need to succeed, in one place.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 p-4 border-0 shadow-sm">
+                        <i class="bi bi-lightning-charge-fill text-primary feature-icon"></i>
+                        <h5 class="mt-3">Blazing Fast</h5>
+                        <p class="text-muted">Optimized for speed and performance on all devices.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 p-4 border-0 shadow-sm">
+                        <i class="bi bi-shield-lock-fill text-success feature-icon"></i>
+                        <h5 class="mt-3">Secure by Default</h5>
+                        <p class="text-muted">Enterprise-grade security built into every layer.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 p-4 border-0 shadow-sm">
+                        <i class="bi bi-graph-up-arrow text-warning feature-icon"></i>
+                        <h5 class="mt-3">Scalable</h5>
+                        <p class="text-muted">Grows with your business from day one to millions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-5">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-2">Simple Pricing</h2>
+            <p class="text-muted mb-5">No hidden fees. Cancel anytime.</p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4">
+                    <div class="card pricing-card p-4 border">
+                        <h5>Starter</h5>
+                        <div class="display-6 fw-bold my-3">Free</div>
+                        <ul class="list-unstyled text-muted">
+                            <li>✅ 1 Project</li>
+                            <li>✅ 5GB Storage</li>
+                            <li>❌ Priority Support</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline-primary mt-3">Get Started</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card pricing-card p-4 border-primary border-2 shadow">
+                        <span class="badge bg-primary mb-2">Most Popular</span>
+                        <h5>Pro</h5>
+                        <div class="display-6 fw-bold my-3">$19<small class="fs-6">/mo</small></div>
+                        <ul class="list-unstyled text-muted">
+                            <li>✅ 10 Projects</li>
+                            <li>✅ 50GB Storage</li>
+                            <li>✅ Priority Support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary mt-3">Choose Pro</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card pricing-card p-4 border">
+                        <h5>Enterprise</h5>
+                        <div class="display-6 fw-bold my-3">$49<small class="fs-6">/mo</small></div>
+                        <ul class="list-unstyled text-muted">
+                            <li>✅ Unlimited Projects</li>
+                            <li>✅ 500GB Storage</li>
+                            <li>✅ 24/7 Support</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline-dark mt-3">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-5">What Our Users Say</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card p-4 border-0 shadow-sm">
+                        <p class="fst-italic">"LaunchKit helped us ship 3x faster. Absolutely love it!"</p>
+                        <div class="fw-bold mt-2">— Alice M., CTO</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 border-0 shadow-sm">
+                        <p class="fst-italic">"The best platform we've used. Simple, fast, and reliable."</p>
+                        <div class="fw-bold mt-2">— Bob K., Founder</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 border-0 shadow-sm">
+                        <p class="fst-italic">"Incredible support team and amazing features. 10/10!"</p>
+                        <div class="fw-bold mt-2">— Carol T., Developer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / CTA -->
+    <section id="contact" class="py-5 bg-primary text-white text-center">
+        <div class="container">
+            <h2 class="fw-bold">Ready to Get Started?</h2>
+            <p class="lead mt-2 mb-4">Join 10,000+ teams already using LaunchKit.</p>
+            <form class="row justify-content-center g-2">
+                <div class="col-md-4">
+                    <input type="email" class="form-control form-control-lg" placeholder="Enter your email">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-light btn-lg fw-bold">Start Free Trial</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-white">
+        <div class="container">
+            <p class="mb-1 fw-bold">🚀 LaunchKit</p>
+            <p class="text-muted small mb-2">© 2024 LaunchKit. All rights reserved.</p>
+            <div class="d-flex justify-content-center gap-3 fs-5">
+                <a href="#" class="text-white"><i class="bi bi-twitter-x"></i></a>
+                <a href="#" class="text-white"><i class="bi bi-github"></i></a>
+                <a href="#" class="text-white"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

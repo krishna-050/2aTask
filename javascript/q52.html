@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q52 - Form Validation</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 40px; }
+    .form-box { background: white; padding: 30px; border-radius: 12px; width: 380px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #4f46e5; margin-top: 0; }
+    .field { margin-bottom: 18px; }
+    label { display: block; font-size: 0.9rem; color: #555; margin-bottom: 5px; }
+    input { width: 100%; padding: 10px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; box-sizing: border-box; outline: none; transition: border 0.2s; }
+    input:focus { border-color: #4f46e5; }
+    input.error { border-color: #ef4444; }
+    input.success { border-color: #22c55e; }
+    .msg { font-size: 0.8rem; margin-top: 4px; min-height: 16px; }
+    .msg.error { color: #ef4444; }
+    .msg.success { color: #22c55e; }
+    button { width: 100%; padding: 12px; background: #4f46e5; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+    button:hover { background: #4338ca; }
+    #formSuccess { display: none; text-align: center; color: #22c55e; font-weight: bold; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="form-box">
+    <h2>Register</h2>
+    <form id="regForm" novalidate>
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter full name">
+        <div class="msg" id="nameMsg"></div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter email">
+        <div class="msg" id="emailMsg"></div>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Min 6 characters">
+        <div class="msg" id="passwordMsg"></div>
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <input type="password" id="confirm" placeholder="Re-enter password">
+        <div class="msg" id="confirmMsg"></div>
+      </div>
+      <button type="submit">Register</button>
+      <div id="formSuccess">✅ Registration Successful!</div>
+    </form>
+  </div>
+
+  <script>
+    function validate(id, msgId, condition, errMsg) {
+      const el = document.getElementById(id);
+      const msg = document.getElementById(msgId);
+      if (condition(el.value)) {
+        el.className = 'success'; msg.className = 'msg success'; msg.textContent = '✓ Looks good'; return true;
+      } else {
+        el.className = 'error'; msg.className = 'msg error'; msg.textContent = errMsg; return false;
+      }
+    }
+
+    document.getElementById('name').addEventListener('input', () =>
+      validate('name', 'nameMsg', v => v.trim().length >= 3, 'Name must be at least 3 characters'));
+    document.getElementById('email').addEventListener('input', () =>
+      validate('email', 'emailMsg', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), 'Enter a valid email'));
+    document.getElementById('password').addEventListener('input', () =>
+      validate('password', 'passwordMsg', v => v.length >= 6, 'Password must be at least 6 characters'));
+    document.getElementById('confirm').addEventListener('input', () =>
+      validate('confirm', 'confirmMsg', v => v === document.getElementById('password').value, 'Passwords do not match'));
+
+    document.getElementById('regForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const a = validate('name', 'nameMsg', v => v.trim().length >= 3, 'Name must be at least 3 characters');
+      const b = validate('email', 'emailMsg', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), 'Enter a valid email');
+      const c = validate('password', 'passwordMsg', v => v.length >= 6, 'Password must be at least 6 characters');
+      const d = validate('confirm', 'confirmMsg', v => v === document.getElementById('password').value, 'Passwords do not match');
+      if (a && b && c && d) document.getElementById('formSuccess').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

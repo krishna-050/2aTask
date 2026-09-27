@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sticky Navbar</title>
+
+    <style>
+
+        /* Basic Page */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 0;
+
+            background-color: rgb(143, 17, 110);
+
+            padding: 20px;
+
+            box-shadow: 0 3px 10px #999;   
+         }
+
+
+        /* Navbar Links */
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            margin-right: 25px;
+            font-weight: bold;
+        }
+
+
+        /* Hover Effect */
+        .navbar a:hover {
+            color: blue;
+        }
+
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+            height: 1500px;
+        }
+        .card{
+            background-color: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: -5px 5px 10px #999;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar">
+
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Courses</a>
+        <a href="#">Contact</a>
+
+    </nav>
+
+
+    <!-- Page Content -->
+    <main class="content">
+        <div class="card">
+        <h1>Student Portal</h1>
+
+        <p>
+            Scroll down the page and the navbar will
+            remain at the top.
+        </p>
+
+        <p>
+            This is some extra content to demonstrate
+            the sticky navbar.
+        </p>
+        </div>
+    </main>
+
+</body>
+
+</html>

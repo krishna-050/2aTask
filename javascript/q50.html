@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q50 - Memory Game</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #1a1a2e; color: white; padding: 20px; }
+    h2 { color: #e94560; }
+    #board { display: grid; grid-template-columns: repeat(4, 100px); gap: 10px; justify-content: center; margin: 20px auto; }
+    .card {
+      width: 100px; height: 100px; background: #16213e; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; cursor: pointer; border: 2px solid #e94560;
+      transition: transform 0.3s;
+    }
+    .card.flipped { background: #0f3460; transform: rotateY(180deg); }
+    .card.matched { background: #4caf50; border-color: #4caf50; cursor: default; }
+    #info { font-size: 1.1rem; margin: 10px; }
+    button { padding: 10px 25px; background: #e94560; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h2>Q50 - Memory Game</h2>
+  <div id="info">Moves: <span id="moves">0</span> | Matches: <span id="matches">0</span>/8</div>
+  <div id="board"></div>
+  <button onclick="initGame()">Restart</button>
+
+  <script>
+    const emojis = ['🍎','🍌','🍇','🍓','🍒','🥝','🍑','🍍'];
+    let cards = [], flipped = [], moves = 0, matches = 0, lock = false;
+
+    function initGame() {
+      cards = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
+      flipped = []; moves = 0; matches = 0; lock = false;
+      document.getElementById('moves').textContent = 0;
+      document.getElementById('matches').textContent = 0;
+      const board = document.getElementById('board');
+      board.innerHTML = '';
+      cards.forEach((emoji, i) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.dataset.index = i;
+        card.dataset.emoji = emoji;
+        card.textContent = '❓';
+        card.addEventListener('click', flipCard);
+        board.appendChild(card);
+      });
+    }
+
+    function flipCard() {
+      if (lock || this.classList.contains('flipped') || this.classList.contains('matched')) return;
+      this.classList.add('flipped');
+      this.textContent = this.dataset.emoji;
+      flipped.push(this);
+      if (flipped.length === 2) {
+        moves++;
+        document.getElementById('moves').textContent = moves;
+        lock = true;
+        if (flipped[0].dataset.emoji === flipped[1].dataset.emoji) {
+          flipped.forEach(c => c.classList.add('matched'));
+          matches++;
+          document.getElementById('matches').textContent = matches;
+          if (matches === 8) setTimeout(() => alert(`🎉 You won in ${moves} moves!`), 300);
+          flipped = []; lock = false;
+        } else {
+          setTimeout(() => {
+            flipped.forEach(c => { c.classList.remove('flipped'); c.textContent = '❓'; });
+            flipped = []; lock = false;
+          }, 900);
+        }
+      }
+    }
+
+    initGame();
+  </script>
+</body>
+</html>

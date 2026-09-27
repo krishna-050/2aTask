@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q59 - Image Preview</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+    .box { background: white; padding: 35px; border-radius: 14px; width: 420px; box-shadow: 0 6px 25px rgba(0,0,0,0.12); text-align: center; }
+    h2 { color: #4f46e5; margin-top: 0; }
+    .upload-area {
+      border: 2px dashed #c4b5fd; border-radius: 12px; padding: 30px;
+      cursor: pointer; transition: all 0.2s; background: #faf5ff; margin-bottom: 20px;
+    }
+    .upload-area:hover { border-color: #4f46e5; background: #f5f3ff; }
+    .upload-area.drag { border-color: #4f46e5; background: #ede9fe; }
+    .upload-area .icon { font-size: 2.5rem; }
+    .upload-area p { color: #888; margin: 8px 0 0; font-size: 0.9rem; }
+    input[type="file"] { display: none; }
+    #preview-wrap { display: none; }
+    #preview { width: 100%; max-height: 250px; object-fit: cover; border-radius: 10px; border: 2px solid #e5e7eb; }
+    .file-info { font-size: 0.85rem; color: #666; margin-top: 10px; }
+    .btn-remove { margin-top: 12px; padding: 8px 20px; background: #ef4444; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+    .btn-upload { margin-top: 10px; padding: 10px 25px; background: #4f46e5; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Q59 - Image Preview</h2>
+    <div class="upload-area" id="dropArea" onclick="document.getElementById('fileInput').click()"
+      ondragover="event.preventDefault(); this.classList.add('drag')"
+      ondragleave="this.classList.remove('drag')"
+      ondrop="handleDrop(event)">
+      <div class="icon">📁</div>
+      <p>Click or drag & drop an image here</p>
+      <p>PNG, JPG, GIF up to 5MB</p>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" onchange="previewImage(this.files[0])">
+
+    <div id="preview-wrap">
+      <img id="preview" src="" alt="Preview">
+      <div class="file-info" id="fileInfo"></div>
+      <button class="btn-remove" onclick="removeImage()">✕ Remove</button>
+      <br>
+      <button class="btn-upload">⬆️ Upload Image</button>
+    </div>
+  </div>
+
+  <script>
+    function previewImage(file) {
+      if (!file || !file.type.startsWith('image/')) return alert('Please select an image file.');
+      if (file.size > 5 * 1024 * 1024) return alert('File size must be under 5MB.');
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('preview').src = e.target.result;
+        document.getElementById('fileInfo').textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        document.getElementById('preview-wrap').style.display = 'block';
+        document.getElementById('dropArea').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeImage() {
+      document.getElementById('preview').src = '';
+      document.getElementById('fileInput').value = '';
+      document.getElementById('preview-wrap').style.display = 'none';
+      document.getElementById('dropArea').style.display = 'block';
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      document.getElementById('dropArea').classList.remove('drag');
+      previewImage(e.dataTransfer.files[0]);
+    }
+  </script>
+</body>
+</html>

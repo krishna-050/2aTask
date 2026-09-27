@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CSS Theme System</title>
+
+    <style>
+
+        /* 1. Create CSS Variables */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f1f5f9;
+            --text-color: #1e293b;
+            --card-color: white;
+        }
+
+
+        /* 2. Use Variables */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+
+        /* Main Section */
+        main {
+            padding: 30px;
+            text-align: center;
+        }
+
+
+        /* Card */
+        .card {
+            background-color: var(--card-color);
+            max-width: 400px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: -5px 5px 10px #999;
+        }
+
+
+        /* Button */
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>My Website</h1>
+        <p>CSS Variables Theme System</p>
+    </header>
+
+
+    <main>
+
+        <div class="card">
+
+            <h2>Welcome!</h2>
+
+            <p>
+                This website uses CSS variables
+                for its color theme.
+            </p>
+
+            <button>Get Started</button>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

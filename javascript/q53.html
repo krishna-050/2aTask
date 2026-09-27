@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q53 - Event Delegation</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 30px; }
+    h2 { color: #4f46e5; text-align: center; }
+    p.info { text-align: center; color: #555; font-size: 0.95rem; }
+    #card-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin: 20px 0; }
+    .card {
+      width: 140px; padding: 20px; background: white; border-radius: 12px;
+      text-align: center; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border: 2px solid transparent; transition: all 0.2s; user-select: none;
+    }
+    .card:hover { border-color: #4f46e5; transform: translateY(-3px); }
+    .card.selected { background: #4f46e5; color: white; border-color: #4f46e5; }
+    .card .icon { font-size: 2rem; }
+    .card .name { margin-top: 8px; font-weight: bold; }
+    .card .role { font-size: 0.8rem; opacity: 0.7; }
+    #log { background: white; border-radius: 10px; padding: 15px; max-width: 500px; margin: 0 auto; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+    #log h3 { margin: 0 0 10px; color: #4f46e5; }
+    #log ul { list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
+    #log ul li { padding: 5px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; color: #333; }
+  </style>
+</head>
+<body>
+  <h2>Q53 - Event Delegation</h2>
+  <p class="info">One listener on the container handles all card clicks (Event Delegation).</p>
+
+  <div id="card-container">
+    <div class="card" data-name="Alice" data-role="Designer">
+      <div class="icon">👩‍🎨</div>
+      <div class="name">Alice</div>
+      <div class="role">Designer</div>
+    </div>
+    <div class="card" data-name="Bob" data-role="Developer">
+      <div class="icon">👨‍💻</div>
+      <div class="name">Bob</div>
+      <div class="role">Developer</div>
+    </div>
+    <div class="card" data-name="Carol" data-role="Manager">
+      <div class="icon">👩‍💼</div>
+      <div class="name">Carol</div>
+      <div class="role">Manager</div>
+    </div>
+    <div class="card" data-name="Dave" data-role="Tester">
+      <div class="icon">🧪</div>
+      <div class="name">Dave</div>
+      <div class="role">Tester</div>
+    </div>
+  </div>
+
+  <div id="log">
+    <h3>Event Log</h3>
+    <ul id="logList"><li>No card clicked yet.</li></ul>
+  </div>
+
+  <script>
+    // Single event listener on parent — Event Delegation
+    document.getElementById('card-container').addEventListener('click', function(e) {
+      const card = e.target.closest('.card');
+      if (!card) return;
+
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+
+      const name = card.dataset.name;
+      const role = card.dataset.role;
+      const list = document.getElementById('logList');
+      if (list.firstChild.textContent === 'No card clicked yet.') list.innerHTML = '';
+      const li = document.createElement('li');
+      li.textContent = `✅ Clicked: ${name} (${role}) at ${new Date().toLocaleTimeString()}`;
+      list.prepend(li);
+    });
+  </script>
+</body>
+</html>

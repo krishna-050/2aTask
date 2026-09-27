@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q58 - Accordion</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 40px; }
+    .accordion { width: 550px; }
+    h2 { text-align: center; color: #4f46e5; margin-bottom: 20px; }
+    .acc-item { background: white; border-radius: 10px; margin-bottom: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; }
+    .acc-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 20px; cursor: pointer; user-select: none;
+      font-weight: 600; color: #333; transition: background 0.2s;
+    }
+    .acc-header:hover { background: #f5f3ff; }
+    .acc-header.open { color: #4f46e5; background: #f5f3ff; }
+    .acc-icon { font-size: 1.2rem; transition: transform 0.3s; }
+    .acc-header.open .acc-icon { transform: rotate(45deg); }
+    .acc-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; padding: 0 20px; }
+    .acc-body.open { max-height: 200px; padding: 0 20px 16px; }
+    .acc-body p { margin: 0; color: #555; line-height: 1.6; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="accordion">
+    <h2>Q58 - Accordion</h2>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggle(this)">
+        <span>🌐 What is HTML?</span><span class="acc-icon">+</span>
+      </div>
+      <div class="acc-body"><p>HTML (HyperText Markup Language) is the standard language for creating web pages. It describes the structure of a web page using elements and tags.</p></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggle(this)">
+        <span>🎨 What is CSS?</span><span class="acc-icon">+</span>
+      </div>
+      <div class="acc-body"><p>CSS (Cascading Style Sheets) is used to style and layout web pages. It controls colors, fonts, spacing, and responsive design.</p></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggle(this)">
+        <span>⚡ What is JavaScript?</span><span class="acc-icon">+</span>
+      </div>
+      <div class="acc-body"><p>JavaScript is a programming language that adds interactivity to web pages. It runs in the browser and can manipulate the DOM dynamically.</p></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggle(this)">
+        <span>🚀 What is a Framework?</span><span class="acc-icon">+</span>
+      </div>
+      <div class="acc-body"><p>A framework is a pre-built structure that provides tools and conventions to speed up development. Examples include React, Vue, and Angular.</p></div>
+    </div>
+  </div>
+
+  <script>
+    function toggle(header) {
+      const isOpen = header.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.acc-header').forEach(h => {
+        h.classList.remove('open');
+        h.nextElementSibling.classList.remove('open');
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        header.classList.add('open');
+        header.nextElementSibling.classList.add('open');
+      }
+    }
+  </script>
+</body>
+</html>

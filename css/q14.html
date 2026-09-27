@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pricing Plans</title>
+
+    <style>
+
+        /* Whole Page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;  
+            padding: 40px;
+        }
+
+
+        /* Heading */
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+
+        /* Flexbox Container */
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+
+        /* Pricing Card */
+        .card {
+            background-color: white;
+            width: 250px;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 -5px 15px #aaa;
+        }
+
+
+        /* Price */
+        .price {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+
+        /* Button */
+        button {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: darkblue;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Choose Your Plan</h1>
+
+    <div class="pricing-container">
+
+        <!-- Basic Plan -->
+        <div class="card">
+
+            <h2>Basic</h2>
+
+            <p class="price">₹199</p>
+
+            <p>5 GB Storage</p>
+            <p>Basic Support</p>
+            <p>1 User</p>
+
+            <button class="button">Choose Plan</button>
+
+        </div>
+
+
+        <!-- Pro Plan -->
+        <div class="card">
+
+            <h2>Pro</h2>
+
+            <p class="price">₹499</p>
+
+            <p>50 GB Storage</p>
+            <p>Priority Support</p>
+            <p>5 Users</p>
+
+            <button class="button">Choose Plan</button>
+
+        </div>
+
+
+        <!-- Premium Plan -->
+        <div class="card">
+
+            <h2>Premium</h2>
+
+            <p class="price">₹999</p>
+
+            <p>100 GB Storage</p>
+            <p>24/7 Support</p>
+            <p>Unlimited Users</p>
+
+            <button class="button">Choose Plan</button>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
