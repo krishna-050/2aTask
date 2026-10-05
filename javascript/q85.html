@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q85 - Pagination</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 30px; }
+        h2 { text-align: center; margin-bottom: 20px; }
+        .spinner { display: none; text-align: center; margin: 20px; font-size: 1rem; color: #888; }
+        .cards { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-bottom: 25px; }
+        .card { background: white; border-radius: 10px; width: 180px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 130px; object-fit: contain; padding: 10px; }
+        .card-body { padding: 10px; }
+        .card-body h3 { font-size: 0.8rem; margin: 0 0 5px; color: #333; }
+        .card-body .price { color: #4f46e5; font-weight: bold; font-size: 0.9rem; }
+        .pagination { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .pagination button { padding: 8px 14px; border: 2px solid #4f46e5; background: white; color: #4f46e5; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .pagination button.active { background: #4f46e5; color: white; }
+        .pagination button:disabled { opacity: 0.4; cursor: default; }
+    </style>
+</head>
+<body>
+    <h2>Pagination</h2>
+    <div class="spinner" id="spinner">⏳ Loading...</div>
+    <div class="cards" id="cards"></div>
+    <div class="pagination" id="pagination"></div>
+
+    <script>
+        const perPage = 6;
+        let allProducts = [], currentPage = 1;
+
+        async function init() {
+            document.getElementById('spinner').style.display = 'block';
+            const res  = await fetch('https://fakestoreapi.com/products');
+            allProducts = await res.json();
+            document.getElementById('spinner').style.display = 'none';
+            renderPage(1);
+            renderPagination();
+        }
+
+        function renderPage(page) {
+            currentPage = page;
+            const start = (page - 1) * perPage;
+            const items = allProducts.slice(start, start + perPage);
+            document.getElementById('cards').innerHTML = items.map(p => `
+                <div class="card">
+                    <img src="${p.image}" alt="${p.title}">
+                    <div class="card-body">
+                        <h3>${p.title.substring(0, 40)}...</h3>
+                        <div class="price">$${p.price}</div>
+                    </div>
+                </div>`
+            ).join('');
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const total = Math.ceil(allProducts.length / perPage);
+            let html = `<button onclick="renderPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>← Prev</button>`;
+            for (let i = 1; i <= total; i++) {
+                html += `<button onclick="renderPage(${i})" class="${i === currentPage ? 'active' : ''}">${i}</button>`;
+            }
+            html += `<button onclick="renderPage(${currentPage + 1})" ${currentPage === total ? 'disabled' : ''}>Next →</button>`;
+            document.getElementById('pagination').innerHTML = html;
+        }
+
+        init();
+    </script>
+</body>
+</html>

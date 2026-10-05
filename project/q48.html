@@ -3,54 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Q48 - Prime Number Checker</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 40px; background: #f0f0f0; }
+        .box { background: white; padding: 30px; border-radius: 10px; width: 380px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        h2 { margin-bottom: 20px; }
+        .row { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 6px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+        .result { padding: 15px; border-radius: 8px; font-size: 1.1rem; margin-bottom: 20px; }
+        .yes { background: #d4edda; color: #155724; }
+        .no  { background: #f8d7da; color: #721c24; }
+    </style>
 </head>
-<body class="bg-light d-flex justify-content-center align-items-center" style="min-height:100vh">
-<div class="card shadow p-5 text-center" style="width:420px">
-    <h4 class="mb-4">Prime Number Checker</h4>
-
-    <div class="input-group mb-3">
-        <input type="number" id="num" class="form-control text-center fs-5" placeholder="Enter a number" min="1">
-        <button class="btn btn-primary" onclick="check()">Check</button>
+<body>
+    <div class="box">
+        <h2>Prime Number Checker</h2>
+        <div class="row">
+            <input type="number" id="num" placeholder="Enter a number" min="1">
+            <button onclick="check()">Check</button>
+        </div>
+        <div id="result"></div>
     </div>
 
-    <div id="result" class="mb-4"></div>
-
-    <hr>
-    <p class="fw-bold mb-2">First 20 Prime Numbers:</p>
-    <div id="primeList" class="d-flex flex-wrap gap-1 justify-content-center"></div>
-</div>
-
-<script>
-    function isPrime(n) {
-        if (n < 2) return false;
-        for (let i = 2; i <= Math.sqrt(n); i++) if (n % i === 0) return false;
-        return true;
-    }
-
-    function check() {
-        const n = parseInt(document.getElementById('num').value);
-        const res = document.getElementById('result');
-        if (isNaN(n) || n < 1) {
-            res.innerHTML = '<div class="alert alert-warning">Please enter a valid positive number.</div>';
-            return;
+    <script>
+        function isPrime(n) {
+            if (n < 2) return false;
+            for (let i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) return false;
+            }
+            return true;
         }
-        if (isPrime(n)) {
-            res.innerHTML = `<div class="alert alert-success fs-5">✅ <strong>${n}</strong> is a Prime Number!</div>`;
-        } else {
-            const factors = [];
-            for (let i = 2; i <= n; i++) if (n % i === 0) factors.push(i);
-            res.innerHTML = `<div class="alert alert-danger fs-5">❌ <strong>${n}</strong> is NOT a Prime Number.<br><small>Factors: ${factors.join(', ')}</small></div>`;
+
+        function check() {
+            const n = parseInt(document.getElementById('num').value);
+            if (!n || n < 1) return;
+
+            const result = document.getElementById('result');
+            if (isPrime(n)) {
+                result.innerHTML = `<div class="result yes">✅ ${n} is a Prime Number!</div>`;
+            } else {
+                result.innerHTML = `<div class="result no">❌ ${n} is NOT a Prime Number.</div>`;
+            }
         }
-    }
 
-    // Show first 20 primes
-    const primes = [];
-    for (let i = 2; primes.length < 20; i++) if (isPrime(i)) primes.push(i);
-    document.getElementById('primeList').innerHTML =
-        primes.map(p => `<span class="badge bg-primary">${p}</span>`).join('');
-
-    document.getElementById('num').addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
-</script>
+        document.getElementById('num').addEventListener('keydown', e => {
+            if (e.key === 'Enter') check();
+        });
+    </script>
 </body>
 </html>

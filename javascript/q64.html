@@ -1,93 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Q64 - Theme Switcher</title>
-  <style>
-    :root[data-theme="light"] {
-      --bg: #f0f4f8; --card: #ffffff; --text: #333333; --sub: #666666;
-      --border: #e5e7eb; --accent: #4f46e5; --btn-bg: #4f46e5; --btn-text: white;
-    }
-    :root[data-theme="dark"] {
-      --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --sub: #94a3b8;
-      --border: #334155; --accent: #818cf8; --btn-bg: #818cf8; --btn-text: #0f172a;
-    }
-    :root[data-theme="ocean"] {
-      --bg: #0c4a6e; --card: #075985; --text: #e0f2fe; --sub: #bae6fd;
-      --border: #0369a1; --accent: #38bdf8; --btn-bg: #38bdf8; --btn-text: #0c4a6e;
-    }
-    :root[data-theme="forest"] {
-      --bg: #14532d; --card: #166534; --text: #dcfce7; --sub: #bbf7d0;
-      --border: #15803d; --accent: #4ade80; --btn-bg: #4ade80; --btn-text: #14532d;
-    }
-    * { transition: background 0.3s, color 0.3s, border-color 0.3s; }
-    body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; margin: 0; padding: 30px; }
-    h2 { text-align: center; color: var(--accent); }
-    .theme-bar { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }
-    .theme-btn {
-      padding: 9px 20px; border: 2px solid transparent; border-radius: 25px;
-      cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s;
-    }
-    .theme-btn.active { border-color: var(--accent); }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 25px; max-width: 500px; margin: 0 auto 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .card h3 { margin-top: 0; color: var(--accent); }
-    .card p { color: var(--sub); line-height: 1.6; }
-    .card button { padding: 10px 22px; background: var(--btn-bg); color: var(--btn-text); border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
-    .toggle-row:last-child { border-bottom: none; }
-    .toggle-row span { color: var(--text); font-size: 0.95rem; }
-    .toggle { width: 44px; height: 24px; background: var(--border); border-radius: 12px; position: relative; cursor: pointer; }
-    .toggle.on { background: var(--accent); }
-    .toggle::after { content: ''; position: absolute; width: 18px; height: 18px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: left 0.2s; }
-    .toggle.on::after { left: 23px; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Q64 - Theme Switcher</title>
+    <style>
+        body { font-family: Arial, sans-serif; min-height: 100vh; padding: 30px; transition: background 0.3s, color 0.3s; }
+        h2 { text-align: center; margin-bottom: 20px; }
+        .btns { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .btns button { padding: 10px 20px; border: 2px solid transparent; border-radius: 25px; cursor: pointer; font-size: 0.95rem; font-weight: bold; }
+        .btns button.active { border-color: currentColor; }
+        .card { max-width: 450px; margin: 0 auto; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .card h3 { margin-top: 0; }
+        .card p { line-height: 1.6; }
+
+        /* Themes */
+        body.light { background: #f0f4f8; color: #333; }
+        body.light .card { background: white; }
+        body.dark  { background: #0f172a; color: #f1f5f9; }
+        body.dark  .card { background: #1e293b; }
+        body.ocean { background: #0c4a6e; color: #e0f2fe; }
+        body.ocean .card { background: #075985; }
+        body.forest { background: #14532d; color: #dcfce7; }
+        body.forest .card { background: #166534; }
+    </style>
 </head>
-<body>
-  <h2>Q64 - Theme Switcher</h2>
-  <div class="theme-bar">
-    <button class="theme-btn active" style="background:#f0f4f8;color:#333" onclick="setTheme('light',this)">☀️ Light</button>
-    <button class="theme-btn" style="background:#1e293b;color:#f1f5f9" onclick="setTheme('dark',this)">🌙 Dark</button>
-    <button class="theme-btn" style="background:#075985;color:#e0f2fe" onclick="setTheme('ocean',this)">🌊 Ocean</button>
-    <button class="theme-btn" style="background:#166534;color:#dcfce7" onclick="setTheme('forest',this)">🌿 Forest</button>
-  </div>
-
-  <div class="card">
-    <h3>Sample Card</h3>
-    <p>This card demonstrates how the theme changes affect background, text, and accent colors dynamically using CSS variables.</p>
-    <button>Action Button</button>
-  </div>
-
-  <div class="card">
-    <h3>Settings</h3>
-    <div class="toggle-row">
-      <span>🔔 Notifications</span>
-      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+<body class="light">
+    <h2>Theme Switcher</h2>
+    <div class="btns">
+        <button onclick="setTheme('light', this)" class="active">☀️ Light</button>
+        <button onclick="setTheme('dark', this)">🌙 Dark</button>
+        <button onclick="setTheme('ocean', this)">🌊 Ocean</button>
+        <button onclick="setTheme('forest', this)">🌿 Forest</button>
     </div>
-    <div class="toggle-row">
-      <span>📧 Email Updates</span>
-      <div class="toggle" onclick="this.classList.toggle('on')"></div>
+    <div class="card">
+        <h3>Sample Card</h3>
+        <p>This card changes its look based on the selected theme. Click the buttons above to switch themes.</p>
     </div>
-    <div class="toggle-row">
-      <span>🔒 Two-Factor Auth</span>
-      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
-    </div>
-  </div>
 
-  <script>
-    function setTheme(theme, btn) {
-      document.documentElement.setAttribute('data-theme', theme);
-      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      localStorage.setItem('theme', theme);
-    }
-    const saved = localStorage.getItem('theme');
-    if (saved) {
-      document.documentElement.setAttribute('data-theme', saved);
-      document.querySelectorAll('.theme-btn').forEach(b => {
-        if (b.getAttribute('onclick').includes(saved)) b.classList.add('active');
-        else b.classList.remove('active');
-      });
-    }
-  </script>
+    <script>
+        function setTheme(theme, btn) {
+            document.body.className = theme;
+            document.querySelectorAll('.btns button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+    </script>
 </body>
 </html>

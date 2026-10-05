@@ -1,63 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Q46 - Number Sorting</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 40px; background: #f0f0f0; }
+        .box { background: white; padding: 30px; border-radius: 10px; width: 400px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; margin-bottom: 20px; }
+        input { width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 15px; }
+        .btns { display: flex; gap: 10px; margin-bottom: 20px; }
+        button { flex: 1; padding: 10px; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; color: white; }
+        .asc  { background: #007bff; }
+        .desc { background: #dc3545; }
+        p { font-size: 1rem; margin: 8px 0; }
+        span.num { display: inline-block; background: #e9ecef; padding: 4px 10px; border-radius: 4px; margin: 3px; }
+    </style>
 </head>
-<body class="bg-light d-flex justify-content-center align-items-center" style="min-height:100vh">
-<div class="card shadow p-5" style="width:480px">
-    <h4 class="text-center mb-4">Number Sorting UI</h4>
-
-    <label class="form-label">Enter numbers (comma separated):</label>
-    <input type="text" id="nums" class="form-control mb-3" placeholder="e.g. 5, 2, 9, 1, 7, 3">
-
-    <div class="d-flex gap-2 mb-4">
-        <button class="btn btn-primary flex-fill" onclick="sort('asc')">⬆ Ascending</button>
-        <button class="btn btn-danger flex-fill" onclick="sort('desc')">⬇ Descending</button>
-        <button class="btn btn-warning flex-fill" onclick="sortRandom()">🔀 Shuffle</button>
+<body>
+    <div class="box">
+        <h2>Number Sorting</h2>
+        <input type="text" id="nums" placeholder="Enter numbers: 5, 2, 9, 1, 7">
+        <div class="btns">
+            <button class="asc" onclick="sortNums('asc')">⬆ Low to High</button>
+            <button class="desc" onclick="sortNums('desc')">⬇ High to Low</button>
+        </div>
+        <div id="result"></div>
     </div>
 
-    <div id="original" class="mb-3"></div>
-    <div id="result"></div>
-</div>
+    <script>
+        function sortNums(dir) {
+            const nums = document.getElementById('nums').value
+                .split(',')
+                .map(n => parseFloat(n.trim()))
+                .filter(n => !isNaN(n));
 
-<script>
-    function getNumbers() {
-        return document.getElementById('nums').value
-            .split(',')
-            .map(n => parseFloat(n.trim()))
-            .filter(n => !isNaN(n));
-    }
+            if (!nums.length) return;
 
-    function renderBars(nums, containerId, label, colorClass) {
-        const max = Math.max(...nums);
-        document.getElementById(containerId).innerHTML =
-            `<p class="fw-bold mb-2">${label}</p>` +
-            `<div class="d-flex align-items-end gap-1" style="height:100px">` +
-            nums.map(n =>
-                `<div class="d-flex flex-column align-items-center flex-fill">
-                    <small>${n}</small>
-                    <div class="${colorClass} rounded-top" style="width:100%;height:${Math.round((n/max)*80)+10}px"></div>
-                </div>`
-            ).join('') + `</div>`;
-    }
+            const sorted = [...nums].sort((a, b) => dir === 'asc' ? a - b : b - a);
 
-    function sort(dir) {
-        const nums = getNumbers();
-        if (!nums.length) return;
-        renderBars(nums, 'original', 'Original:', 'bg-secondary');
-        const sorted = [...nums].sort((a, b) => dir === 'asc' ? a - b : b - a);
-        renderBars(sorted, 'result', dir === 'asc' ? 'Sorted Ascending:' : 'Sorted Descending:', dir === 'asc' ? 'bg-primary' : 'bg-danger');
-    }
-
-    function sortRandom() {
-        const nums = getNumbers();
-        if (!nums.length) return;
-        renderBars(nums, 'original', 'Original:', 'bg-secondary');
-        const shuffled = [...nums].sort(() => Math.random() - 0.5);
-        renderBars(shuffled, 'result', 'Shuffled:', 'bg-warning');
-    }
-</script>
+            document.getElementById('result').innerHTML =
+                `<p><b>Original:</b> ${nums.map(n => `<span class="num">${n}</span>`).join('')}</p>
+                 <p><b>Sorted:</b> ${sorted.map(n => `<span class="num">${n}</span>`).join('')}</p>`;
+        }
+    </script>
 </body>
 </html>

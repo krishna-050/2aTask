@@ -1,74 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Q56 - Show/Hide Password</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-    .box { background: white; padding: 35px 40px; border-radius: 14px; width: 360px; box-shadow: 0 6px 25px rgba(0,0,0,0.12); }
-    h2 { text-align: center; color: #4f46e5; margin-top: 0; }
-    label { display: block; font-size: 0.9rem; color: #555; margin-bottom: 6px; }
-    .input-wrap { position: relative; margin-bottom: 20px; }
-    .input-wrap input {
-      width: 100%; padding: 11px 45px 11px 14px; border: 2px solid #e5e7eb;
-      border-radius: 9px; font-size: 1rem; outline: none; box-sizing: border-box; transition: border 0.2s;
-    }
-    .input-wrap input:focus { border-color: #4f46e5; }
-    .toggle-btn {
-      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-      background: none; border: none; cursor: pointer; font-size: 1.2rem; padding: 0;
-    }
-    .strength { height: 6px; border-radius: 4px; margin-top: -14px; margin-bottom: 16px; background: #e5e7eb; overflow: hidden; }
-    .strength-bar { height: 100%; width: 0; border-radius: 4px; transition: width 0.3s, background 0.3s; }
-    .strength-label { font-size: 0.8rem; color: #888; margin-bottom: 16px; }
-    button.submit { width: 100%; padding: 12px; background: #4f46e5; color: white; border: none; border-radius: 9px; font-size: 1rem; cursor: pointer; }
-    button.submit:hover { background: #4338ca; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Q56 - Show/Hide Password</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .box { background: white; padding: 30px; border-radius: 12px; width: 340px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; margin-top: 0; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #555; }
+        .row { display: flex; gap: 8px; margin-bottom: 15px; }
+        input { flex: 1; padding: 10px; border: 2px solid #ccc; border-radius: 8px; font-size: 1rem; }
+        .eye { padding: 10px 14px; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; cursor: pointer; font-size: 1.1rem; }
+        button.submit { width: 100%; padding: 12px; background: #4f46e5; color: white; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+    </style>
 </head>
 <body>
-  <div class="box">
-    <h2>🔐 Login</h2>
-    <label>Email</label>
-    <div class="input-wrap">
-      <input type="email" placeholder="Enter email">
+    <div class="box">
+        <h2>🔐 Login</h2>
+        <label>Email</label>
+        <div class="row">
+            <input type="email" placeholder="Enter email">
+        </div>
+        <label>Password</label>
+        <div class="row">
+            <input type="password" id="pwd" placeholder="Enter password">
+            <button class="eye" onclick="toggle()" id="eyeBtn">👁️</button>
+        </div>
+        <button class="submit">Login</button>
     </div>
-    <label>Password</label>
-    <div class="input-wrap">
-      <input type="password" id="pwd" placeholder="Enter password" oninput="checkStrength(this.value)">
-      <button class="toggle-btn" onclick="togglePwd()" id="eyeBtn">👁️</button>
-    </div>
-    <div class="strength"><div class="strength-bar" id="strengthBar"></div></div>
-    <div class="strength-label" id="strengthLabel">Password strength</div>
-    <button class="submit">Login</button>
-  </div>
 
-  <script>
-    let visible = false;
-    function togglePwd() {
-      visible = !visible;
-      const pwd = document.getElementById('pwd');
-      pwd.type = visible ? 'text' : 'password';
-      document.getElementById('eyeBtn').textContent = visible ? '🙈' : '👁️';
-    }
-
-    function checkStrength(val) {
-      const bar = document.getElementById('strengthBar');
-      const label = document.getElementById('strengthLabel');
-      let score = 0;
-      if (val.length >= 6) score++;
-      if (/[A-Z]/.test(val)) score++;
-      if (/[0-9]/.test(val)) score++;
-      if (/[^A-Za-z0-9]/.test(val)) score++;
-      const levels = [
-        { w: '0%', bg: '#e5e7eb', text: 'Password strength' },
-        { w: '25%', bg: '#ef4444', text: '😟 Weak' },
-        { w: '50%', bg: '#f97316', text: '😐 Fair' },
-        { w: '75%', bg: '#eab308', text: '🙂 Good' },
-        { w: '100%', bg: '#22c55e', text: '💪 Strong' },
-      ];
-      const l = val.length === 0 ? levels[0] : levels[score];
-      bar.style.width = l.w; bar.style.background = l.bg; label.textContent = l.text;
-    }
-  </script>
+    <script>
+        function toggle() {
+            const pwd = document.getElementById('pwd');
+            const isText = pwd.type === 'text';
+            pwd.type = isText ? 'password' : 'text';
+            document.getElementById('eyeBtn').textContent = isText ? '👁️' : '🙈';
+        }
+    </script>
 </body>
 </html>

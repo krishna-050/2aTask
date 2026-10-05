@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q89 - CRUD API</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 30px; }
+        h2 { text-align: center; margin-bottom: 20px; }
+        .box { background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: 0 auto 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .box h3 { margin-top: 0; color: #4f46e5; }
+        input, textarea { width: 100%; padding: 10px; border: 2px solid #ccc; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; margin-bottom: 10px; }
+        input:focus, textarea:focus { border-color: #4f46e5; outline: none; }
+        button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; color: white; }
+        .btn-c { background: #22c55e; }
+        .btn-r { background: #4f46e5; }
+        .btn-u { background: #f59e0b; }
+        .btn-d { background: #ef4444; }
+        .result { background: #f8f8f8; border-radius: 8px; padding: 15px; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; color: #333; max-height: 200px; overflow-y: auto; }
+        .status { text-align: center; font-weight: bold; margin-bottom: 10px; min-height: 20px; }
+        .ok  { color: #22c55e; }
+        .err { color: #ef4444; }
+        small { color: #888; font-size: 0.8rem; display: block; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <h2>CRUD API Operations</h2>
+    <small style="text-align:center;display:block;margin-bottom:15px;color:#888">Uses JSONPlaceholder (fake REST API for testing)</small>
+
+    <!-- CREATE -->
+    <div class="box">
+        <h3>➕ Create (POST)</h3>
+        <small>Add a new post</small>
+        <input type="text" id="cTitle" placeholder="Title">
+        <textarea id="cBody" placeholder="Body" rows="2"></textarea>
+        <button class="btn-c" onclick="create()">Create Post</button>
+    </div>
+
+    <!-- READ -->
+    <div class="box">
+        <h3>📖 Read (GET)</h3>
+        <small>Get post by ID (1-100)</small>
+        <div style="display:flex;gap:10px">
+            <input type="number" id="rId" placeholder="Post ID" min="1" max="100">
+            <button class="btn-r" onclick="read()">Get Post</button>
+        </div>
+    </div>
+
+    <!-- UPDATE -->
+    <div class="box">
+        <h3>✏️ Update (PUT)</h3>
+        <small>Update post by ID</small>
+        <input type="number" id="uId" placeholder="Post ID" min="1" max="100">
+        <input type="text"   id="uTitle" placeholder="New Title">
+        <button class="btn-u" onclick="update()">Update Post</button>
+    </div>
+
+    <!-- DELETE -->
+    <div class="box">
+        <h3>🗑️ Delete (DELETE)</h3>
+        <small>Delete post by ID</small>
+        <div style="display:flex;gap:10px">
+            <input type="number" id="dId" placeholder="Post ID" min="1" max="100">
+            <button class="btn-d" onclick="del()">Delete Post</button>
+        </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="box">
+        <h3>📋 Response</h3>
+        <div class="status" id="status"></div>
+        <div class="result" id="result">Response will appear here...</div>
+    </div>
+
+    <script>
+        const BASE = 'https://jsonplaceholder.typicode.com/posts';
+
+        function show(data, msg, ok) {
+            document.getElementById('status').textContent = msg;
+            document.getElementById('status').className  = 'status ' + (ok ? 'ok' : 'err');
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function create() {
+            const title = document.getElementById('cTitle').value;
+            const body  = document.getElementById('cBody').value;
+            if (!title || !body) return show({}, '❌ Fill all fields', false);
+            const res  = await fetch(BASE, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ title, body, userId: 1 }) });
+            const data = await res.json();
+            show(data, '✅ Post Created!', true);
+        }
+
+        async function read() {
+            const id = document.getElementById('rId').value;
+            if (!id) return show({}, '❌ Enter an ID', false);
+            const res  = await fetch(`${BASE}/${id}`);
+            if (!res.ok) return show({}, '❌ Post not found', false);
+            const data = await res.json();
+            show(data, '✅ Post Fetched!', true);
+        }
+
+        async function update() {
+            const id    = document.getElementById('uId').value;
+            const title = document.getElementById('uTitle').value;
+            if (!id || !title) return show({}, '❌ Fill all fields', false);
+            const res  = await fetch(`${BASE}/${id}`, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ id, title, body: 'updated', userId: 1 }) });
+            const data = await res.json();
+            show(data, '✅ Post Updated!', true);
+        }
+
+        async function del() {
+            const id = document.getElementById('dId').value;
+            if (!id) return show({}, '❌ Enter an ID', false);
+            const res = await fetch(`${BASE}/${id}`, { method: 'DELETE' });
+            show({}, res.ok ? '✅ Post Deleted!' : '❌ Delete failed', res.ok);
+        }
+    </script>
+</body>
+</html>

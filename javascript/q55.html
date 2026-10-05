@@ -1,75 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Q55 - Live Search</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 30px; }
-    h2 { color: #4f46e5; text-align: center; }
-    .search-wrap { max-width: 500px; margin: 0 auto 20px; position: relative; }
-    .search-wrap input {
-      width: 100%; padding: 12px 45px 12px 15px; border: 2px solid #e5e7eb;
-      border-radius: 10px; font-size: 1rem; outline: none; box-sizing: border-box;
-    }
-    .search-wrap input:focus { border-color: #4f46e5; }
-    .search-wrap span { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; }
-    #list { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
-    .item {
-      background: white; padding: 14px 18px; border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07); display: flex; align-items: center; gap: 12px;
-    }
-    .item .avatar { width: 40px; height: 40px; border-radius: 50%; background: #4f46e5; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
-    .item .details .name { font-weight: bold; color: #333; }
-    .item .details .sub { font-size: 0.85rem; color: #888; }
-    .item mark { background: #fef08a; border-radius: 3px; padding: 0 2px; }
-    #noResult { text-align: center; color: #aaa; display: none; margin-top: 20px; font-size: 1rem; }
-    #count { text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Q55 - Live Search</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 30px; }
+        h2 { text-align: center; margin-bottom: 20px; }
+        input { display: block; width: 100%; max-width: 450px; margin: 0 auto 20px; padding: 12px; border: 2px solid #ccc; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+        .list { max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+        .item { background: white; padding: 14px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .item b { color: #333; }
+        .item span { color: #888; font-size: 0.85rem; }
+        .none { text-align: center; color: #aaa; margin-top: 20px; }
+    </style>
 </head>
 <body>
-  <h2>Q55 - Live Search Filter</h2>
-  <div class="search-wrap">
-    <input type="text" id="searchInput" placeholder="Search by name or city..." oninput="filterList()">
-    <span>🔍</span>
-  </div>
-  <div id="count"></div>
-  <div id="list"></div>
-  <div id="noResult">😕 No results found.</div>
+    <h2>Live Search</h2>
+    <input type="text" id="search" placeholder="Search by name or city..." oninput="filter()">
+    <div class="list" id="list"></div>
+    <div class="none" id="none" style="display:none">No results found.</div>
 
-  <script>
-    const people = [
-      { name: 'Alice Johnson', city: 'New York', job: 'Designer' },
-      { name: 'Bob Smith', city: 'London', job: 'Developer' },
-      { name: 'Carol White', city: 'Paris', job: 'Manager' },
-      { name: 'David Brown', city: 'Tokyo', job: 'Tester' },
-      { name: 'Eva Green', city: 'Berlin', job: 'Analyst' },
-      { name: 'Frank Lee', city: 'Sydney', job: 'DevOps' },
-      { name: 'Grace Kim', city: 'Seoul', job: 'Designer' },
-      { name: 'Henry Ford', city: 'Chicago', job: 'Developer' },
-    ];
+    <script>
+        const people = [
+            { name: 'Alice Johnson', city: 'New York', job: 'Designer' },
+            { name: 'Bob Smith',     city: 'London',   job: 'Developer' },
+            { name: 'Carol White',   city: 'Paris',    job: 'Manager' } ,
+            { name: 'David Brown',   city: 'Tokyo',    job: 'Tester' },
+            { name: 'Eva Green',     city: 'Berlin',   job: 'Analyst' },
+            { name: 'Frank Lee',     city: 'Sydney',   job: 'DevOps' },
+        ];
 
-    function highlight(text, query) {
-      if (!query) return text;
-      return text.replace(new RegExp(`(${query})`, 'gi'), '<mark>$1</mark>');
-    }
+        function filter() {
+            const q = document.getElementById('search').value.toLowerCase();
+            const filtered = people.filter(p => p.name.toLowerCase().includes(q) || p.city.toLowerCase().includes(q));
+            document.getElementById('list').innerHTML = filtered.map(p =>
+                `<div class="item"><b>${p.name}</b><br><span>${p.city} · ${p.job}</span></div>`
+            ).join('');
+            document.getElementById('none').style.display = filtered.length ? 'none' : 'block';
+        }
 
-    function filterList() {
-      const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      const list = document.getElementById('list');
-      const filtered = people.filter(p => p.name.toLowerCase().includes(q) || p.city.toLowerCase().includes(q));
-      list.innerHTML = filtered.map(p => `
-        <div class="item">
-          <div class="avatar">${p.name[0]}</div>
-          <div class="details">
-            <div class="name">${highlight(p.name, q)}</div>
-            <div class="sub">${highlight(p.city, q)} · ${p.job}</div>
-          </div>
-        </div>`).join('');
-      document.getElementById('noResult').style.display = filtered.length ? 'none' : 'block';
-      document.getElementById('count').textContent = `Showing ${filtered.length} of ${people.length} results`;
-    }
-
-    filterList();
-  </script>
+        filter();
+    </script>
 </body>
 </html>

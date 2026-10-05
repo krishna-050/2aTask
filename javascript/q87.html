@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q87 - Infinite Scroll</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 30px; }
+        h2 { text-align: center; margin-bottom: 5px; }
+        p.sub { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.9rem; }
+        .cards { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .card { background: white; border-radius: 10px; width: 180px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 130px; object-fit: contain; padding: 10px; }
+        .card-body { padding: 10px; }
+        .card-body h3 { font-size: 0.8rem; margin: 0 0 5px; color: #333; }
+        .card-body .price { color: #4f46e5; font-weight: bold; }
+        .loader { text-align: center; padding: 20px; color: #888; display: none; }
+        .end { text-align: center; padding: 20px; color: #aaa; display: none; }
+    </style>
+</head>
+<body>
+    <h2>Infinite Scroll</h2>
+    <p class="sub">Scroll down to load more products</p>
+    <div class="cards" id="cards"></div>
+    <div class="loader" id="loader">⏳ Loading more...</div>
+    <div class="end"   id="end">✅ All products loaded!</div>
+
+    <script>
+        let allProducts = [], page = 0, perPage = 4, loading = false;
+
+        async function init() {
+            const res = await fetch('https://fakestoreapi.com/products');
+            allProducts = await res.json();
+            loadMore();
+        }
+
+        function loadMore() {
+            if (loading || page * perPage >= allProducts.length) return;
+            loading = true;
+            document.getElementById('loader').style.display = 'block';
+
+            setTimeout(() => {
+                const items = allProducts.slice(page * perPage, (page + 1) * perPage);
+                const cards = document.getElementById('cards');
+                items.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    div.innerHTML = `<img src="${p.image}" alt="${p.title}">
+                        <div class="card-body">
+                            <h3>${p.title.substring(0, 40)}...</h3>
+                            <div class="price">$${p.price}</div>
+                        </div>`;
+                    cards.appendChild(div);
+                });
+                page++;
+                loading = false;
+                document.getElementById('loader').style.display = 'none';
+                if (page * perPage >= allProducts.length)
+                    document.getElementById('end').style.display = 'block';
+            }, 800);
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) loadMore();
+        });
+
+        init();
+    </script>
+</body>
+</html>

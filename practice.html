@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .circle {
+        height: 300px;
+        width: 300px;
+
+        background-color: yellow;
+        border-radius: 50%;
+    }
+</style>
+
+<body>
+
+    <div class='circle'></div>
+    <button style="color: white;; background-color: blueviolet; height: 30px;width: 100px;"
+        class="light">submit</button>
+
+        <h1>hello</h1>
+
+</body>
+<script>
+    var circle = document.querySelector('.circle');
+    var btn = document.querySelector('.light');
+    var h1 = document.querySelector('h1')
+    var flag=3
+    btn.addEventListener("click", function () {
+        if(flag==0){
+            circle.style.backgroundColor ="orange"
+            console.log("clicked")
+            flag=1;
+        }else if(flag==1){
+             circle.style.backgroundColor = "yellow";
+             console.log("again")
+             flag=0
+        }
+
+    });
+    h1.addEventListener("dblclick",function(){
+        if(flag==3){
+            h1.innerHTML = "hello guys"
+            h1.style.color = "orange"
+            flag=0
+        }
+    })
+    
+</script>
+
+</html>

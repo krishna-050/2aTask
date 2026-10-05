@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q88 - Country Info App</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 30px; }
+        h2 { text-align: center; margin-bottom: 20px; }
+        input { display: block; width: 100%; max-width: 400px; margin: 0 auto 20px; padding: 12px; border: 2px solid #ccc; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+        input:focus { border-color: #4f46e5; outline: none; }
+        .spinner { display: none; text-align: center; color: #888; margin-bottom: 15px; }
+        .error { display: none; text-align: center; color: #dc2626; background: #fee2e2; padding: 10px; border-radius: 8px; max-width: 400px; margin: 0 auto 15px; }
+        .cards { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .card { background: white; border-radius: 10px; width: 220px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 120px; object-fit: cover; }
+        .card-body { padding: 12px; font-size: 0.85rem; color: #555; }
+        .card-body h3 { margin: 0 0 8px; color: #333; font-size: 1rem; }
+        .card-body p { margin: 3px 0; }
+    </style>
+</head>
+<body>
+    <h2>🌍 Country Info App</h2>
+    <input type="text" id="search" placeholder="Search country..." oninput="search()">
+    <div class="spinner" id="spinner">⏳ Loading...</div>
+    <div class="error"   id="error"></div>
+    <div class="cards"   id="cards"></div>
+
+    <script>
+        let allCountries = [];
+
+        async function init() {
+            document.getElementById('spinner').style.display = 'block';
+            try {
+                const res = await fetch('https://restcountries.com/v3.1/all?fields=name,flags,capital,population,region');
+                allCountries = await res.json();
+                allCountries.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                render(allCountries.slice(0, 12));
+            } catch {
+                document.getElementById('error').textContent = '❌ Failed to load countries.';
+                document.getElementById('error').style.display = 'block';
+            } finally {
+                document.getElementById('spinner').style.display = 'none';
+            }
+        }
+
+        function search() {
+            const q = document.getElementById('search').value.toLowerCase();
+            const filtered = allCountries.filter(c => c.name.common.toLowerCase().includes(q));
+            render(filtered.slice(0, 12));
+        }
+
+        function render(countries) {
+            document.getElementById('cards').innerHTML = countries.map(c => `
+                <div class="card">
+                    <img src="${c.flags.svg}" alt="${c.name.common}">
+                    <div class="card-body">
+                        <h3>${c.name.common}</h3>
+                        <p>🌍 ${c.region}</p>
+                        <p>🏙️ ${c.capital?.[0] || 'N/A'}</p>
+                        <p>👥 ${c.population.toLocaleString()}</p>
+                    </div>
+                </div>`
+            ).join('');
+        }
+
+        init();
+    </script>
+</body>
+</html>
